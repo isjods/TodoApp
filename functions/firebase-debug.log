@@ -1,0 +1,16 @@
+[debug] [2023-05-08T10:07:31.156Z] ----------------------------------------------------------------------
+[debug] [2023-05-08T10:07:31.156Z] Command:       /usr/local/bin/node /usr/local/bin/firebase functions:shell
+[debug] [2023-05-08T10:07:31.157Z] CLI Version:   11.29.1
+[debug] [2023-05-08T10:07:31.157Z] Platform:      darwin
+[debug] [2023-05-08T10:07:31.157Z] Node Version:  v18.16.0
+[debug] [2023-05-08T10:07:31.157Z] Time:          Mon May 08 2023 18:07:31 GMT+0800 (Singapore Standard Time)
+[debug] [2023-05-08T10:07:31.158Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-05-08T10:07:31.253Z] AssertionError [ERR_ASSERTION]: expected value to be defined but got "undefined"
+    at new AssertionError (node:internal/assert/assertion_error:452:5)
+    at Object.assertDefined (/usr/local/lib/node_modules/firebase-tools/lib/utils.js:379:15)
+    at Command.actionFunction [as actionFn] (/usr/local/lib/node_modules/firebase-tools/lib/functionsShellCommandAction.js:29:11)
+    at /usr/local/lib/node_modules/firebase-tools/lib/command.js:216:25
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[error] 
+[error] Error: An unexpected error has occurred.
