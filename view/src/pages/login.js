@@ -83,11 +83,12 @@ class login extends Component {
 				this.setState({ 
 					loading: false,
 				});		
-				this.props.history.push('/'); //the handleSubmit does not redirect the user to homepage after login
+				//this.props.history.push('/'); //the handleSubmit does not redirect the user to homepage after login
+				window.location.href="http://localhost:3000/";
 			})
 			.catch((error) => {				
 				this.setState({
-					errors: error.response.data,
+					errors: error,
 					loading: false
 				});
 			});

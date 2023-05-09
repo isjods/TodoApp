@@ -113,7 +113,9 @@ class home extends Component {
 			})
 			.catch((error) => {
 				if(error.response.status === 403) {
-					this.props.history.push('/login') //pushes user back to login if authToken is null
+					//this.props.history.push('/login') //pushes user back to login if authToken is null
+					window.location.href="http://localhost:3000/login";
+
 				}
 				console.log(error);
 				this.setState({ errorMsg: 'Error in retrieving the data' });

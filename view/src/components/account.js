@@ -11,6 +11,7 @@ import clsx from 'clsx';
 import axios from 'axios';
 import { authMiddleWare } from '../util/auth';
 
+
 const styles = (theme) => ({
 	content: {
 		flexGrow: 1,

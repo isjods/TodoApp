@@ -163,8 +163,11 @@ exports.uploadProfilePhoto = (request, response) => {
 exports.getUserDetail = (request, response) => {
     let userData = {};
 	db
-        .doc(`/users/${request.user.username}`)
-		.get() //to derive the user details
+        .collection("users")
+		//.doc(`${request.user.uid}`)
+        //.doc('${request.user.userCredentials}')
+        .doc('jdyUKKU5ClMjXFgKIsVMPemCkxJ2')
+		.get()
 		.then((doc) => {
 			if (doc.exists) {
                 userData.userCredentials = doc.data();
@@ -175,7 +178,7 @@ exports.getUserDetail = (request, response) => {
 			console.error(error);
 			return response.status(500).json({ error: error.code });
 		});
-};
+}
 
 /*exports.getUserDetail = (request, response) => {
 	db
@@ -200,7 +203,7 @@ exports.getUserDetail = (request, response) => {
 };*/
 
 exports.updateUserDetails = (request, response) => {
-    let document = db.collection('users').doc(`${request.user.username}`);
+    let document = db.doc(`${request.user.username}`);
     document.update(request.body) //using firebase update method
     .then(()=> {
         response.json({message: 'Updated successfully'});
