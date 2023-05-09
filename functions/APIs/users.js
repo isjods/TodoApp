@@ -115,16 +115,16 @@ exports.uploadProfilePhoto = (request, response) => {
 	const path = require('path');
 	const os = require('os');
 	const fs = require('fs');
-	const busboy = new BusBoy({ headers: request.headers });
+	const busboy = BusBoy({ headers: request.headers });
 
 	let imageFileName;
 	let imageToBeUploaded = {};
 
-	busboy.on('file', (fieldname, file, filename, encoding, mimetype) => {
-		if (mimetype !== 'image/png' && mimetype !== 'image/jpeg') {
+	busboy.on('file', (fieldname, file, mimetype, encoding, filename) => {
+		if (mimetype.mimeType !== 'image/png' && mimetype.mimeType !== 'image/jpeg') {
 			return response.status(400).json({ error: 'Wrong file type submited' });
 		}
-		const imageExtension = filename.split('.')[filename.split('.').length - 1];
+		const imageExtension = String(filename).split('.')[String(filename).split('.').length - 1];
         imageFileName = `${request.user.username}.${imageExtension}`;
 		const filePath = path.join(os.tmpdir(), imageFileName);
 		imageToBeUploaded = { filePath, mimetype };
@@ -163,8 +163,7 @@ exports.uploadProfilePhoto = (request, response) => {
 exports.getUserDetail = (request, response) => {
     let userData = {};
 	db
-        .collection('users')
-        .doc(`${request.user.username}`)
+        .doc(`/users/${request.user.username}`)
 		.get() //to derive the user details
 		.then((doc) => {
 			if (doc.exists) {
@@ -176,7 +175,29 @@ exports.getUserDetail = (request, response) => {
 			console.error(error);
 			return response.status(500).json({ error: error.code });
 		});
-}
+};
+
+/*exports.getUserDetail = (request, response) => {
+	db
+		.collection('users')
+        .where('username', '==', request.user.username) //authorisation needed
+		.orderBy('createdAt', 'desc')
+		.get()
+		.then((data) => {
+			let users = [];
+			data.forEach((doc) => {
+				users.push({
+                    username: doc.data().username,
+					createdAt: doc.data().createdAt
+				});
+			});
+			return response.json(users);
+		})
+		.catch((err) => {
+			console.error(err);
+			return response.status(500).json({ error: err.code});
+		});
+};*/
 
 exports.updateUserDetails = (request, response) => {
     let document = db.collection('users').doc(`${request.user.username}`);
@@ -190,4 +211,4 @@ exports.updateUserDetails = (request, response) => {
             message: "Cannot Update the value"
         });
     });
-}
+};

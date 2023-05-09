@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { cloneElement, Component } from 'react';
 import axios from 'axios';
 
 import Account from '../components/account';
@@ -83,7 +83,6 @@ class home extends Component {
 		super(props);
 
 		this.state = {
-            username:'',
 			firstName: '',
 			lastName: '',
 			profilePicture: '',
@@ -93,7 +92,7 @@ class home extends Component {
 	}
 
     //PROBLEM LIES HERE
-	componentDidMount = () => {
+	componentWillMount = () => {
 		authMiddleWare(this.props.history);
 		const authToken = localStorage.getItem('AuthToken');
 		axios.defaults.headers.common = { Authorization: `${authToken}` };
@@ -116,7 +115,7 @@ class home extends Component {
 				if(error.response.status === 403) {
 					this.props.history.push('/login') //pushes user back to login if authToken is null
 				}
-				console.log(error.response.data);
+				console.log(error);
 				this.setState({ errorMsg: 'Error in retrieving the data' });
 			});
 	};

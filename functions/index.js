@@ -23,7 +23,6 @@ const {
 app.post('/login', loginUser); //assign post route to loginUser method
 app.post('/signup', signUpUser);
 app.post('/user/image', auth, uploadProfilePhoto); //assign post route to signUpUser method
-//added authetication layer so only user associated with account can upload image
 app.post('/user', auth, updateUserDetails);
 
 app.get('/todos', auth, getAllTodos);
