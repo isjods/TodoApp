@@ -43,7 +43,7 @@ const styles = (theme) => ({
 });
 
 //create class named login that has a form and submit handler inside
-class login extends Component {
+class login extends React.Component {
 	constructor(props) {
 		super(props);
 

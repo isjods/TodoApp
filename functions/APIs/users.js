@@ -6,6 +6,7 @@ const firebase = require('firebase');
 firebase.initializeApp(config);
 
 const { validateLoginData, validateSignUpData } = require('../util/validators');
+const { user } = require('firebase-functions/v1/auth');
 
 // Login
 exports.loginUser = (request, response) => {
@@ -164,15 +165,19 @@ exports.getUserDetail = (request, response) => {
     let userData = {};
 	db
         .collection("users")
-		//.doc(`${request.user.uid}`)
-        //.doc('${request.user.userCredentials}')
-        .doc('jdyUKKU5ClMjXFgKIsVMPemCkxJ2')
-		.get()
-		.then((doc) => {
-			if (doc.exists) {
-                userData.userCredentials = doc.data();
+        .where('username', '==', request.user.username)
+        .get()
+		.then((result) => {
+            /*userData = result.data();
+            console.log(userData);
+            return response.json(result)*/
+            
+            result.docs.map((doc) => {
+                userData = doc.data();
+                console.log(userData);
                 return response.json(userData);
-			}	
+            })
+
 		})
 		.catch((error) => {
 			console.error(error);
@@ -203,8 +208,10 @@ exports.getUserDetail = (request, response) => {
 };*/
 
 exports.updateUserDetails = (request, response) => {
-    let document = db.doc(`${request.user.username}`);
+    //let document = db.doc(`${request.user.username}`);
+    let document = db.collection("users").where('username', '==', request.user.username)
     document.update(request.body) //using firebase update method
+
     .then(()=> {
         response.json({message: 'Updated successfully'});
     })

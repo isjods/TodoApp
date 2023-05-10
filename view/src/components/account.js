@@ -73,7 +73,7 @@ class account extends Component {
 			country: '',
 			profilePicture: '',
 			uiLoading: false,
-			buttonLoading: true,
+			buttonLoading: false,
 			imageError: ''
 		};
 	}
@@ -90,13 +90,14 @@ class account extends Component {
 			.then((response) => {
 				console.log(response.data);
 				this.setState({
-					firstName: response.data.userCredentials.firstName,
-					lastName: response.data.userCredentials.lastName,
-					email: response.data.userCredentials.email,
-					phoneNumber: response.data.userCredentials.phoneNumber,
-					country: response.data.userCredentials.country,
-					username: response.data.userCredentials.username,
-					uiLoading: false
+					firstName: response.data.firstName,
+					lastName: response.data.lastName,
+					email: response.data.email,
+					phoneNumber: response.data.phoneNumber,
+					country: response.data.country,
+					username: response.data.username,
+					uiLoading: false,
+					profilePicture: response.data.imageUrl
 				});
 			})
 			.catch((error) => {

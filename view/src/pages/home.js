@@ -61,7 +61,7 @@ const styles = (theme) => ({
 	toolbar: theme.mixins.toolbar
 });
 
-class home extends Component {
+class home extends React.Component {
 	state = {
 		render: false
 	};
@@ -76,7 +76,8 @@ class home extends Component {
 
 	logoutHandler = (event) => {
 		localStorage.removeItem('AuthToken');
-		this.props.history.push('/login');
+		//this.props.history.push('/login');
+		window.location.href="http://localhost:3000/login";
 	};
 
 	constructor(props) {
@@ -101,20 +102,20 @@ class home extends Component {
 			.then((response) => {
 				console.log(response.data);
 				this.setState({
-					firstName: response.data.userCredentials.firstName,
-					lastName: response.data.userCredentials.lastName,
-					email: response.data.userCredentials.email,
-					phoneNumber: response.data.userCredentials.phoneNumber,
-					country: response.data.userCredentials.country,
-					username: response.data.userCredentials.username,
+					firstName: response.data.firstName,
+					lastName: response.data.lastName,
+					email: response.data.email,
+					phoneNumber: response.data.phoneNumber,
+					country: response.data.country,
+					username: response.data.username,
 					uiLoading: false,
-					profilePicture: response.data.userCredentials.imageUrl
+					profilePicture: response.data.imageUrl
 				});
 			})
 			.catch((error) => {
 				if(error.response.status === 403) {
 					//this.props.history.push('/login') //pushes user back to login if authToken is null
-					window.location.href="http://localhost:3000/login";
+					window.location.href="http://localhost:3000/login"; //makes a new http request
 
 				}
 				console.log(error);
@@ -124,7 +125,7 @@ class home extends Component {
 
 	render() {
 		const { classes } = this.props;		
-		if (this.state.uiLoading === false) {
+		if (this.state.uiLoading === true) {
 			return (
 				<div className={classes.root}>
 					{this.state.uiLoading && <CircularProgress size={150} className={classes.uiProgess} />}
